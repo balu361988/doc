@@ -1,14 +1,48 @@
 # 🧾 Hackathon DevOps Project Documentation
+git-Token : - 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 
+git push origin main
+
+......................................................................................
+#pre-install
+#Install AWS CLI
+* sudo apt update
+* sudo apt install unzip curl -y
+* curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+* unzip awscliv2.zip
+* sudo ./aws/install
+* aws configure
+AWS Access Key ID: AKIAVN72DC6EMU4SUCTL
+AWS Secret Access Key: 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
+Default region name: ap-south-1
+.........................................................................................
+#docker
+sudo apt update
+sudo apt install -y apt-transport-https ca-certificates curl software-properties-common
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+sudo apt update && sudo apt install docker-ce -y
+sudo usermod -aG docker $USER
+sudo systemctl status docker
+docker --version
+..............................................................................................................................................
+#terraform
+wget -O - https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(grep -oP '(?<=UBUNTU_CODENAME=).*' /etc/os-release || lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+sudo apt update && sudo apt install terraform
 
 ## 📁 Project Structure (Monorepo)
 
-mkdir -p /hackathon-devops/{appointment-service,patient-service,terraform/environments/{dev,prod,staging},terraform/modules/{alb,ecs,iam,network,securitygroup},.github/workflows}
+mkdir -p /hackathon-devops/{appointment-service,patient-service,terraform/environments/{dev,prod,staging},terraform/modules/{alb,ecs,iam,network,securitygroup}
+
+
 
 # Create empty files
 touch {Dockerfile,index.js,package.json}
 touch {Dockerfile,index.js,package.json}
 touch {backend.tf,main.tf}
-touch root/hackathon-devops/.github/workflows/{appointment.yml,patient.yml}
+
 
 root/hackathon-devops/
 ├── appointment-service/
@@ -49,9 +83,11 @@ RUN npm install
 COPY . .
 EXPOSE 80
 CMD ["npm", "start"]
+...........................................................................
 index.js
-JavaScript
-Copy
+...................
+
+
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 80;
@@ -64,10 +100,9 @@ app.get('/appointment', (req, res) => {
 app.listen(port, host, () => {
   console.log(`✅ Appointment service running on http://${host}:${port}`);
 });
+...........................................................................
 package.json
-JSON
-Copy
-{
+...........................................................................
   "name": "appointment-service",
   "version": "1.0.0",
   "main": "index.js",
@@ -81,8 +116,8 @@ Copy
 ________________________________________
 📦 patient-service
 Dockerfile
-dockerfile
-Copy
+.....................................
+
 FROM node:18-alpine
 WORKDIR /app
 COPY package*.json ./
@@ -90,9 +125,10 @@ RUN npm install
 COPY . .
 EXPOSE 80
 CMD ["npm", "start"]
+..............................................
 index.js
-JavaScript
-Copy
+.................................
+
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 80;
