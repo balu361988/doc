@@ -483,7 +483,9 @@ outputs.tf
 output "ecs_cluster_id" {
   value = aws_ecs_cluster.this.id
 }
+.................................................................................................
 variables.tf
+....................................................................................................
 variable "env" {}
 variable "region" {}
 variable "execution_role_arn" {}
@@ -598,7 +600,9 @@ output "ecs_task_execution_role_arn" {
 output "ecs_task_role_arn" {
   value = aws_iam_role.ecs_task_role.arn
 }
+..................................................................................................
 variables.tf
+................................................................................................
 variable "env" {
   type        = string
   description = "Environment name"
@@ -610,6 +614,7 @@ variable "aws_account_id" {
 ________________________________________
 modules/network
 main.tf
+...................................................................
 resource "aws_vpc" "main" {
   cidr_block           = var.vpc_cidr
   enable_dns_hostnames = true
@@ -694,7 +699,9 @@ resource "aws_route_table_association" "private" {
   subnet_id      = aws_subnet.private[count.index].id
   route_table_id = aws_route_table.private.id
 }
+.........................................................................................
 outputs.tf
+...................................................................................
 output "vpc_id" {
   value = aws_vpc.main.id
 }
@@ -706,7 +713,9 @@ output "public_subnet_ids" {
 output "private_subnet_ids" {
   value = aws_subnet.private[*].id
 }
+..................................................................................
 variables.tf
+................................................................................
 variable "vpc_cidr" {
   type        = string
   description = "VPC CIDR block"
@@ -734,6 +743,7 @@ variable "env" {
 ________________________________________
 modules/securitygroup
 main.tf
+....................................................................................
 resource "aws_security_group" "alb_sg" {
   name        = "${var.env}-alb-sg"
   description = "Allow HTTP traffic from internet"
@@ -784,7 +794,9 @@ resource "aws_security_group_rule" "allow_alb_to_ecs" {
   source_security_group_id = aws_security_group.alb_sg.id
   description              = "Allow HTTP from ALB to ECS"
 }
+..................................................................................................
 outputs.tf
+.................................................................................................
 output "ecs_sg_id" {
   value = aws_security_group.ecs_sg.id
 }
@@ -792,7 +804,9 @@ output "ecs_sg_id" {
 output "alb_sg_id" {
   value = aws_security_group.alb_sg.id
 }
+.......................................................................................................
 variables.tf
+........................................................................................................
 variable "env" {
   description = "Environment"
   type        = string
