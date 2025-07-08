@@ -834,65 +834,92 @@ GitHub Secrets:
 .github/workflows/appointment.yml
 .........................................................................................................
 name: Build and Deploy Appointment Service
+
 on:
   push:
-    branches: [main]
+    branches:
+      - main  # ✅ Trigger on any push to main branch
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
     env:
       IMAGE_URI: ${{ secrets.ECR_REPO_APPOINTMENT }}:latest
+
     steps:
-      - uses: actions/checkout@v3
-      - uses: aws-actions/configure-aws-credentials@v2
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
-      - run: |
+
+      - name: Login to Amazon ECR
+        run: |
           aws ecr get-login-password --region $AWS_REGION | \
           docker login --username AWS --password-stdin ${{ secrets.ECR_REPO_APPOINTMENT }}
-      - run: |
+
+      - name: Build and Push Docker Image
+        run: |
           cd appointment-service
           docker build -t $IMAGE_URI .
           docker push $IMAGE_URI
-      - run: |
+
+      - name: Force ECS Redeploy
+        run: |
           aws ecs update-service \
             --cluster ${{ secrets.CLUSTER_NAME }} \
             --service ${{ secrets.APPOINTMENT_SERVICE_NAME }} \
             --force-new-deployment
+
 .............................................................................................................................................................
 
 .github/workflows/patient.yml
 ...........................................................................................................................................................
 
 name: Build and Deploy Patient Service
+
 on:
   push:
-    branches: [main]
+    branches:
+      - main  # ✅ Trigger on any push to main branch
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
     env:
       IMAGE_URI: ${{ secrets.ECR_REPO_PATIENT }}:latest
+
     steps:
-      - uses: actions/checkout@v3
-      - uses: aws-actions/configure-aws-credentials@v2
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
-      - run: |
+
+      - name: Login to Amazon ECR
+        run: |
           aws ecr get-login-password --region $AWS_REGION | \
           docker login --username AWS --password-stdin ${{ secrets.ECR_REPO_PATIENT }}
-      - run: |
+
+      - name: Build and Push Docker Image
+        run: |
           cd patient-service
           docker build -t $IMAGE_URI .
           docker push $IMAGE_URI
-      - run: |
+
+      - name: Force ECS Redeploy
+        run: |
           aws ecs update-service \
             --cluster ${{ secrets.CLUSTER_NAME }} \
             --service ${{ secrets.PATIENT_SERVICE_NAME }} \
             --force-new-deployment
-________________________________________
+
 
