@@ -158,8 +158,7 @@ package.json
 ________________________________________
 🧱 Terraform Structure
 environments/dev/main.tf
-hcl
-Copy
+
 provider "aws" {
   region = "ap-south-1"
 }
@@ -206,9 +205,9 @@ module "ecs" {
   patient_tg_arn     = module.alb.patient_tg_arn
   appointment_tg_arn = module.alb.appointment_tg_arn
 }
+........................................................................................
 environments/dev/backend.tf
-hcl
-Copy
+.............................................................................
 terraform {
   backend "s3" {
     bucket         = "balu-terraform-backend"
