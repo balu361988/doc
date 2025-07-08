@@ -141,9 +141,9 @@ app.get('/patient', (req, res) => {
 app.listen(port, host, () => {
   console.log(`✅ Patient service running on http://${host}:${port}`);
 });
+.......................................................................................................
 package.json
-JSON
-Copy
+.....................................................................................................
 {
   "name": "patient-service",
   "version": "1.0.0",
