@@ -820,9 +820,19 @@ ________________________________________
 
 
 🚀 GitHub Actions Workflows
+GitHub Secrets:
+................................................................
+1)AWS_ACCESS_KEY_ID : AKIA************
+2)AWS_SECRET_ACCESS_KEY :abcd1234**************
+3)AWS_REGION :ap-south-1
+4)CLUSTER_NAME:dev-ecs-cluster
+5)PATIENT_SERVICE_NAME:patient-service
+6)APPOINTMENT_SERVICE_NAME:appointment-service
+7)ECR_REPO_PATIENT:373649774472.dkr.ecr.ap-south-1.amazonaws.com/patient-service
+8)ECR_REPO_APPOINTMENT:373649774472.dkr.ecr.ap-south-1.amazonaws.com/appointment-service
+.......................................................................................................
 .github/workflows/appointment.yml
-yaml
-Copy
+.........................................................................................................
 name: Build and Deploy Appointment Service
 on:
   push:
@@ -851,9 +861,11 @@ jobs:
             --cluster ${{ secrets.CLUSTER_NAME }} \
             --service ${{ secrets.APPOINTMENT_SERVICE_NAME }} \
             --force-new-deployment
+.............................................................................................................................................................
+
 .github/workflows/patient.yml
-yaml
-Copy
+...........................................................................................................................................................
+
 name: Build and Deploy Patient Service
 on:
   push:
