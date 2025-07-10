@@ -574,7 +574,6 @@ variable "appointment_tg_arn" {
 ...........................................................................................................................
 modules/iam
 ..........................................................................................................................
-main.tf
 resource "aws_iam_role" "ecs_task_execution_role" {
   name = "${var.env}-ecs-task-execution-role"
 
@@ -602,6 +601,7 @@ resource "aws_iam_role_policy_attachment" "ecs_task_execution_policy" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
 
+# ✅ Scoped CloudWatch Logs Policy (patient + appointment)
 resource "aws_iam_policy" "ecs_logs_scoped_policy" {
   name = "${var.env}-ecs-logs-scoped"
 
@@ -636,6 +636,7 @@ resource "aws_iam_role_policy_attachment" "attach_logs_scoped" {
   policy_arn = aws_iam_policy.ecs_logs_scoped_policy.arn
 }
 
+# ✅ Task Role (used by app containers if needed)
 resource "aws_iam_role" "ecs_task_role" {
   name = "${var.env}-ecs-task-role"
 
