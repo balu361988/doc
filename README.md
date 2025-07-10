@@ -95,6 +95,12 @@ mkdir -p ~/hackathon-devops/{appointment-service,patient-service,terraform/envir
 appointment:- touch {Dockerfile,index.js,package.json}
 patient"- touch {Dockerfile,index.js,package.json}
 terraform /dev/ : - touch {backend.tf,main.tf}
+ /modules/alb:- touch {main.tf,outputs.tf,variables.tf}
+ modules/ecs :-touch {main.tf,outputs.tf,variables.tf}
+ modules/iam :- touch {main.tf,outputs.tf,variables.tf}
+ modules/network :- touch {main.tf,outputs.tf,variables.tf}
+  modules/securitygroup :- touch {main.tf,outputs.tf,variables.tf}
+ 
 
 
 root/hackathon-devops/
