@@ -64,8 +64,8 @@ docker push 123456789012.dkr.ecr.ap-south-1.amazonaws.com/patient-service:latest
 * unzip awscliv2.zip
 * sudo ./aws/install
 * aws configure
-AWS Access Key ID: AKIAVN72DC6EMU4SUCTL
-AWS Secret Access Key: 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
+AWS Access Key ID: AKIA3O5SBENMAW27L5PU
+AWS Secret Access Key: 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
 Default region name: ap-south-1
 .........................................................................................
 #docker
@@ -87,7 +87,7 @@ sudo apt update && sudo apt install terraform
 
 ## 📁 Project Structure (Monorepo)
 
-mkdir -p /hackathon-devops/{appointment-service,patient-service,terraform/environments/{dev,prod,staging},terraform/modules/{alb,ecs,iam,network,securitygroup}
+mkdir -p ~/hackathon-devops/{appointment-service,patient-service,terraform/environments/{dev,prod,staging},terraform/modules/{alb,ecs,iam,network,securitygroup}}
 
 
 
