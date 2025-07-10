@@ -1,9 +1,61 @@
 # 🧾 Hackathon DevOps Project Documentation
-git-Token : - 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
+git-Token : - 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
 git push origin main
 
 ......................................................................................
 #pre-install
+terraform - state file backup
+
+aws s3api create-bucket \
+  --bucket hackathon-terraform-state-balu361988 \
+  --region ap-south-1 \
+  --create-bucket-configuration LocationConstraint=ap-south-1
+  ...............................................................................
+  aws dynamodb create-table \
+  --table-name terraform-locks \
+  --attribute-definitions AttributeName=LockID,AttributeType=S \
+  --key-schema AttributeName=LockID,KeyType=HASH \
+  --billing-mode PAY_PER_REQUEST \
+  --region ap-south-1
+...........................................................................
+Update backend.tf:
+
+terraform {
+  backend "s3" {
+    bucket         = "hackathon-terraform-state-balu361988"  # or your new name
+    key            = "hackathon/dev/terraform.tfstate"
+    region         = "ap-south-1"
+    dynamodb_table = "terraform-locks"
+    encrypt        = true
+  }
+}
+
+..................................................................
+terraform init -reconfig
+........................................................................
+Create ECR Repositories
+
+aws ecr create-repository --repository-name appointment-service --region ap-south-1
+aws ecr create-repository --repository-name patient-service --region ap-south-1
+..................................................................................
+Login to ECR
+aws ecr get-login-password --region ap-south-1 | \
+docker login --username AWS --password-stdin (acount_id type).dkr.ecr.ap-south-1.amazonaws.com
+...........................................................................................
+Build Docker Images
+docker build -t appointment-service .
+docker build -t patient-service .
+......................................................................'
+Tag Images for ECR
+..................
+docker tag appointment-service:latest 123456789012.dkr.ecr.ap-south-1.amazonaws.com/appointment-service:latest
+docker tag patient-service:latest 123456789012.dkr.ecr.ap-south-1.amazonaws.com/patient-service:latest
+...........................................................................................................
+Push Images to ECR
+docker push 123456789012.dkr.ecr.ap-south-1.amazonaws.com/appointment-service:latest
+docker push 123456789012.dkr.ecr.ap-south-1.amazonaws.com/patient-service:latest
+.......................................................................
+    
 #Install AWS CLI
 * sudo apt update
 * sudo apt install unzip curl -y
