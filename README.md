@@ -92,9 +92,9 @@ mkdir -p ~/hackathon-devops/{appointment-service,patient-service,terraform/envir
 
 
 # Create empty files
-touch {Dockerfile,index.js,package.json}
-touch {Dockerfile,index.js,package.json}
-touch {backend.tf,main.tf}
+appointment:- touch {Dockerfile,index.js,package.json}
+patient"- touch {Dockerfile,index.js,package.json}
+terraform /dev/ : - touch {backend.tf,main.tf}
 
 
 root/hackathon-devops/
