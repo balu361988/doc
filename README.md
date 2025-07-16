@@ -20,15 +20,14 @@ aws s3api create-bucket \
 ...........................................................................
 Update backend.tf:
 
-terraform {
-  backend "s3" {
-    bucket         = "hackathon-terraform-state-balu361988"  # or your new name
-    key            = "hackathon/dev/terraform.tfstate"
-    region         = "ap-south-1"
-    dynamodb_table = "terraform-locks"
-    encrypt        = true
-  }
-}
+ terraform {
+   backend "s3" {
+     bucket = "balu-terraform-backend"
+     key    = "dev/terraform.tfstate"
+     region = "ap-south-1"
+   }
+ }
+
 
 ..................................................................
 terraform init -reconfig
