@@ -39,7 +39,7 @@ aws ecr create-repository --repository-name patient-service --region ap-south-1
 ..................................................................................
 Login to ECR
 aws ecr get-login-password --region ap-south-1 | \
-docker login --username AWS --password-stdin (acount_id type).dkr.ecr.ap-south-1.amazonaws.com
+docker login --username AWS --password-stdin (acount_id type  ).dkr.ecr.ap-south-1.amazonaws.com
 ...........................................................................................
 Build Docker Images
 docker build -t appointment-service .
@@ -241,7 +241,7 @@ module "network" {
 module "iam" {
   source         = "../../modules/iam"
   env            = "dev"
-  aws_account_id = "373649774472"
+  aws_account_id = "373649774472" ----------------------- >aws_account_id
 }
 
 module "sg" {
@@ -264,8 +264,8 @@ module "ecs" {
   region             = "ap-south-1"
   execution_role_arn = module.iam.ecs_task_execution_role_arn
   task_role_arn      = module.iam.ecs_task_role_arn
-  patient_image      = "373649774472.dkr.ecr.ap-south-1.amazonaws.com/patient-service:latest"
-  appointment_image  = "373649774472.dkr.ecr.ap-south-1.amazonaws.com/appointment-service:latest"
+  patient_image      = "373649774472.dkr.ecr.ap-south-1.amazonaws.com/patient-service:latest" ...........................?aws_account_id
+  appointment_image  = "373649774472.dkr.ecr.ap-south-1.amazonaws.com/appointment-service:latest" ........................>aws_account_id
   private_subnet_ids = module.network.private_subnet_ids
   sg_id              = module.sg.ecs_sg_id
   patient_tg_arn     = module.alb.patient_tg_arn
