@@ -899,6 +899,9 @@ GitHub Secrets:
 8)ECR_REPO_APPOINTMENT:373649774472.dkr.ecr.ap-south-1.amazonaws.com/appointment-service
 .......................................................................................................
 .github/workflows/appointment.yml
+
+mkdir -p .github/workflows
+
 .........................................................................................................
 name: Build and Deploy Appointment Service
 
