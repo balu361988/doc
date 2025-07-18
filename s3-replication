@@ -27,6 +27,8 @@ def lambda_handler(event, context):
 Zip the Lambda Function
 ........................................................................................................
 
+sudo apt update
+sudo apt install zip -y
 zip function.zip lambda_function.py
 ......................................................................................................
 main.tf (Terraform Configuration)
